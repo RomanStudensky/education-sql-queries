@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  pg_db:
+    image: postgres
+    restart: always
+    command: --init-file /data/application/init.sql
+    environment:
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=rest
+    ports:
+      - 5438:5432

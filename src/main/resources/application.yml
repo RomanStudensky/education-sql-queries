@@ -1,0 +1,27 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    generate-ddl: true
+  liquibase:
+    default-schema: ${database.url.schema}
+    change-log: classpath:db/changelog/changelog-master.yml
+    enabled: true
+
+  datasource:
+    url: jdbc:postgresql://${database.url.host}:${database.url.port}/${database.url.db}?currentSchema=${database.url.schema}
+    username: ${database.credentials.username}
+    password: ${database.credentials.password}
+    driverClassName: org.postgresql.Driver
+
+server:
+  port: 8086
+
+database:
+  url:
+    host: localhost
+    port: 5438
+    db: rest
+    schema: public
+  credentials:
+    username: postgres
+    password: 12345

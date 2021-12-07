@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1638878469517-1" author="roman (generated)">
+        <createTable remarks="Акт о списании продуктов" tableName="akt_spis">
+            <column autoIncrement="true" name="id_akt" remarks="№ акта" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="AKT_SPIS_pkey"/>
+            </column>
+            <column name="date_akt" remarks="Дата списания" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sotrud" remarks="Сотрудник (шеф-повар)" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summa" remarks="Сумма списания" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-2" author="roman (generated)">
+        <createTable remarks="Списание продукта (содержание акта о списании)" tableName="sostav_akt">
+            <column name="akt" remarks="№ акта о списании продуктов" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product" remarks="Продукт" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reason" remarks="Причина списания" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" remarks="Количество продукта (в кг)" type="FLOAT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" remarks="Цена за кг" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id_spis" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="SPIS_PRODUCT_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-3" author="roman (generated)">
+        <createTable remarks="Категория меню" tableName="category">
+            <column autoIncrement="true" name="id_cat" remarks="№ категории" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="CATEGORY_pkey"/>
+            </column>
+            <column name="name_cat" remarks="Название категории" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-4" author="roman (generated)">
+        <createTable remarks="Договор на поставку продуктов" tableName="dogovor">
+            <column autoIncrement="true" name="id_dogovor" remarks="№ договора" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="DOGOVOR_pkey"/>
+            </column>
+            <column name="date_dogovor" remarks="Дата составления" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postavshik" remarks="Поставщик" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sostav" remarks="Содержание договора" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-5" author="roman (generated)">
+        <createTable remarks="Заявка на поставку" tableName="orders">
+            <column autoIncrement="true" name="id_order" remarks="№ заявки" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ORDER_pkey"/>
+            </column>
+            <column name="date_order" remarks="Дата заявки" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postavshik" remarks="Поставщик" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dogovor" remarks="№ договора с поставщиком" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-6" author="roman (generated)">
+        <createTable remarks="Товарная накладная (поставка)" tableName="sostav_naklad">
+            <column autoIncrement="true" name="id_naklad" remarks="№ товарной накладной" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="TOVAR_NAKLAD_pkey"/>
+            </column>
+            <column name="date_nak" remarks="Дата поставки" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postavshik" remarks="Поставщик" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dogovor" remarks="№ договора с поставщиком" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summa" remarks="Сумма поставки" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-7" author="roman (generated)">
+        <createTable remarks="Меню" tableName="menu">
+            <column autoIncrement="true" name="id_menu" remarks="№ меню" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="MENU_pkey"/>
+            </column>
+            <column name="bludo" remarks="Название блюда" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" remarks="Вес блюда в граммах" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" remarks="Цена блюда" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" remarks="Категория меню" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-8" author="roman (generated)">
+        <createTable remarks="Состав продажи в баре" tableName="sostav_prod">
+            <column name="prodaza" remarks="№ продажи в баре" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bludo" remarks="Блюдо" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" remarks="Количество блюда (в шт)" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summa" remarks="Стоимость" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id_sost_prod" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="SOSTAV_PROD_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-9" author="roman (generated)">
+        <createTable remarks="Состав заказа" tableName="sostav_zakaz">
+            <column name="zakaz" remarks="№ заказа" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bludo" remarks="Блюдо" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" remarks="Количество блюда (в шт)" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summa" remarks="Стоимость" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id_sost_zak" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="SOSTAV_ZAKAZ_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-10" author="roman (generated)">
+        <createTable remarks="Состав поставки (содержание товарной накладной)" tableName="sostav_postav">
+            <column name="tovar_naklad" remarks="№ товарной накладной" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product" remarks="Продукт" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" remarks="Количество продукта (в кг)" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" remarks="Цена за кг" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id_sost_post" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="SOSTAV_POSTAV_pkey"/>
+            </column>
+            <column name="summa" type="FLOAT8"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-11" author="roman (generated)">
+        <createTable remarks="Состав заявки на поставку" tableName="sostav_order">
+            <column name="orders" remarks="№ заявки" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product" remarks="Продукт" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" remarks="Количество продукта (в кг)" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id_sost_order" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="SOSTAV_ORDER_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-12" author="roman (generated)">
+        <createTable remarks="Поставщик" tableName="postavshik">
+            <column autoIncrement="true" name="id_post" remarks="№ поставщика" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="POSTAVSHIK_pkey"/>
+            </column>
+            <column name="name_post" remarks="Наименование поставщика" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" remarks="Адрес" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" remarks="Телефон" type="VARCHAR(16)"/>
+            <column name="inn" type="VARCHAR(11)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-13" author="roman (generated)">
+        <createTable remarks="Продажа в баре" tableName="prodaza">
+            <column autoIncrement="true" name="id_prod" remarks="№ продажи" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PRODAZA_pkey"/>
+            </column>
+            <column name="date_prod" remarks="Дата продажи" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_prod" remarks="Время продажи" type="TIME WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sotrud" remarks="Сотрудник (бармен)" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summa" remarks="Сумма продажи" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-14" author="roman (generated)">
+        <createTable remarks="Продукт" tableName="product">
+            <column autoIncrement="true" name="id_prod" remarks="№ продукта" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PRODUCT_pkey"/>
+            </column>
+            <column name="name_prod" remarks="Название продукта" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" remarks="Количество на складе (в г)" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-15" author="roman (generated)">
+        <createTable remarks="Бронирование" tableName="reserv">
+            <column autoIncrement="true" name="id_reserv" remarks="№ брони" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="RESERV_pkey"/>
+            </column>
+            <column name="full_name" remarks="ФИО клиента" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_reserv" remarks="Дата брони" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_reserv" remarks="Время брони" type="TIME WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_table" remarks="№ стола" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count_people" remarks="Количество гостей" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-16" author="roman (generated)">
+        <createTable remarks="Сотрудник" tableName="usr">
+            <column autoIncrement="true" name="id_sotrud" remarks="№ сотрудника" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="SOTRUDNIK_pkey"/>
+            </column>
+            <column name="fio" remarks="ФИО сотрудника" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-17" author="roman (generated)">
+        <createTable remarks="Заказ" tableName="zakaz">
+            <column autoIncrement="true" name="id_zakaz" remarks="№ заказа" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ZAKAZ_pkey"/>
+            </column>
+            <column name="date_zakaz" remarks="Дата заказа" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_zakaz" remarks="Время заказа" type="TIME WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stol" remarks="№ стола" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sotrud" remarks="Сотрудник (официант)" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summa" remarks="Сумма заказа" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-18" author="roman (generated)">
+        <createTable remarks="Стол" tableName="stol">
+            <column autoIncrement="true" name="id_table" remarks="№ стола" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="TABLE_pkey"/>
+            </column>
+            <column name="count_place" remarks="Количество мест" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-19" author="roman (generated)">
+        <createTable tableName="sostav_bludo">
+            <column autoIncrement="true" name="id_sostav" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sostav_bludo_pk"/>
+            </column>
+            <column name="count" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="menu" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1638878469517-20" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="akt" baseTableName="sostav_akt" constraintName="AKT_fkey"
+                                 onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id_akt"
+                                 referencedTableName="akt_spis"/>
+    </changeSet>
+    <changeSet id="1638878469517-21" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="dogovor" baseTableName="sostav_naklad" constraintName="DOGOVOR_fkey"
+                                 onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id_dogovor"
+                                 referencedTableName="dogovor"/>
+    </changeSet>
+    <changeSet id="1638878469517-22" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="id_sostav" baseTableName="sostav_bludo"
+                                 constraintName="sostav_bludo_menu_id_menu_fk" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="id_menu" referencedTableName="menu"/>
+    </changeSet>
+    <changeSet id="1638878469517-23" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="bludo" baseTableName="sostav_zakaz" constraintName="MENU_fkey"
+                                 onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id_menu"
+                                 referencedTableName="menu"/>
+    </changeSet>
+    <changeSet id="1638878469517-24" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="tovar_naklad" baseTableName="sostav_postav"
+                                 constraintName="NAKLAD_fkey" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="id_naklad" referencedTableName="sostav_naklad"/>
+    </changeSet>
+    <changeSet id="1638878469517-25" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="orders" baseTableName="sostav_order" constraintName="ORDER_fkey"
+                                 onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id_order"
+                                 referencedTableName="orders"/>
+    </changeSet>
+    <changeSet id="1638878469517-26" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="postavshik" baseTableName="dogovor" constraintName="POST_fkey"
+                                 onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id_post"
+                                 referencedTableName="postavshik"/>
+    </changeSet>
+    <changeSet id="1638878469517-27" author="roman (generated)">
+        <createIndex indexName="postavshik_inn_uindex" tableName="postavshik" unique="true">
+            <column name="inn"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="1638878469517-28" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="id_sostav" baseTableName="sostav_bludo"
+                                 constraintName="sostav_bludo_product_id_prod_fk" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="id_prod" referencedTableName="product"/>
+    </changeSet>
+    <changeSet id="1638878469517-29" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="sotrud" baseTableName="akt_spis" constraintName="SOTRUD_fkey"
+                                 onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id_sotrud"
+                                 referencedTableName="usr"/>
+    </changeSet>
+    <changeSet id="1638878469517-30" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="product" baseTableName="sostav_postav" constraintName="PRODUCT_fkey"
+                                 onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id_prod"
+                                 referencedTableName="product"/>
+    </changeSet>
+    <changeSet id="1638878469517-31" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="postavshik" baseTableName="sostav_naklad"
+                                 constraintName="POSTAVSHIK_fkey" onDelete="NO ACTION" onUpdate="CASCADE"
+                                 referencedColumnNames="id_post" referencedTableName="postavshik"/>
+    </changeSet>
+    <changeSet id="1638878469517-32" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="prodaza" baseTableName="sostav_prod" constraintName="PRODAZA_fkey"
+                                 onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id_prod"
+                                 referencedTableName="prodaza"/>
+    </changeSet>
+    <changeSet id="1638878469517-33" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="zakaz" baseTableName="sostav_zakaz" constraintName="ZAKAZ_fkey"
+                                 onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id_zakaz"
+                                 referencedTableName="zakaz"/>
+    </changeSet>
+    <changeSet id="1638878469517-34" author="roman (generated)">
+        <addForeignKeyConstraint baseColumnNames="id_table" baseTableName="reserv" constraintName="TABLE_fkey"
+                                 onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id_table"
+                                 referencedTableName="stol"/>
+    </changeSet>
+
+</databaseChangeLog>
